@@ -291,7 +291,7 @@ class RADNeRFTask(BaseTask):
         try:
             target_ambient_loss = hparams['target_ambient_loss'] # 1e-7
             current_ambient_loss = loss_output['ambient_loss'].item()
-            print(current_ambient_loss + "," + current_ambient_loss.item())
+            print(current_ambient_loss)
 
             grad_lambda_ambient = (math.log10(current_ambient_loss+1e-15) - math.log10(target_ambient_loss+1e-15)) # 如果需要增大lambda_ambient， 则current_loss大于targt，grad值大于0
             lr_lambda_ambient = hparams['lr_lambda_ambient']
@@ -302,7 +302,7 @@ class RADNeRFTask(BaseTask):
             traceback.print_exc()
 
             print("| WARNING: ERROR calculating ambient loss")
-            print("\n"*100)
+            print('\n' * 10)
         if (self.global_step+1) % hparams['tb_log_interval'] == 0:
             density_grid_info = {
                 "density_grid_info/min_density": self.model.density_grid.min().item(),
